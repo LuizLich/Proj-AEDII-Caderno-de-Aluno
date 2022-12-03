@@ -5,6 +5,14 @@
 
 unsigned int menu, menulembrete, menuflashcard, menuquiz, media, i = 0, numero = 0;
 
+struct no {
+    struct no *esq;
+    char dado[20];
+    struct no *dir;
+};
+typedef struct no *arvore;
+arvore T = NULL;
+
 typedef struct
 {
     char nome[50];
@@ -13,6 +21,9 @@ typedef struct
 Materia nomeM[10];
 
 void funcQuiz();
+void insertNode(arvore *t, char d[20]);
+void inOrdem(arvore t);
+int  procuraDado(arvore t, char d[20]);
 
 int main()
 {
@@ -125,8 +136,10 @@ int main()
 
                 if(menuquiz == 2){
                     printf("\n\n------------------------------------------ Mostrando materias ------------------------------------------\n");
-                    for(int i = 0; i < numero; i++)
-                        printf("\nMateria: %s\nPontuacao: %d de %d questoes\n\n", nomeM[i].nome, nomeM[i].pontuacao, nomeM[i].perguntas);
+                    printf("Ordem alfabetica (A-Z):\n\n");
+                    inOrdem(T);
+                    /*for(int i = 0; i < numero; i++)
+                        printf("\nMateria: %s\nPontuacao: %d de %d questoes\n\n", nomeM[i].nome, nomeM[i].pontuacao, nomeM[i].perguntas);*/
                     printf("\n=====================================================================\n\n");
                 break;
                 }
@@ -183,7 +196,49 @@ void funcQuiz ()
     {
         printf("\nVoce precisa estudar mais na materia: %s! Abaixo da media\n", nomeM[numero].nome);
     }
-
+    insertNode(&T, nomeM[numero].nome);
     numero++;
 }
 
+void insertNode(arvore *t, char d[20]) {
+    if (*t == NULL) {
+        *t = (struct no*) malloc(sizeof(struct no));
+        if ( *t != NULL ) {
+            (*t)->esq = NULL;
+            (*t)->dir = NULL;
+            strcpy((*t)->dado, d);
+        } else
+            printf("Memoria insuficiente");
+    } else
+        if (strcmp(d,(*t)->dado) < 0)
+            insertNode(&(*t)->esq, d);
+        else
+            if (strcmp(d, (*t)->dado) > 0)
+                insertNode(&(*t)->dir, d);
+            else
+                printf("Duplicação de no");
+    return;
+}
+
+void inOrdem(arvore t) {
+    if (t != NULL) {
+        inOrdem(t->esq);
+        printf("- %s\n", t->dado);
+        inOrdem(t->dir);
+    }
+    return;
+}
+
+int  procuraDado(arvore t, char d[20]) {
+    if (t == NULL)
+        return 0;
+    return ((strcmp(t->dado, d) == 0) ||
+             procuraDado(t->esq, d) ||
+             procuraDado(t->dir, d));
+}
+
+int maior(int a, int b) {
+    if (a > b)
+        return(a);
+    return(b);
+}
