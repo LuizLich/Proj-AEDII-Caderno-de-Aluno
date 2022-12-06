@@ -5,7 +5,7 @@
 
 unsigned int menu, menulembrete, menuflashcard, menuquiz, media, i = 0, numero = 0;
 
-struct no {
+struct no { //Struct para percorrer a arvore
     struct no *esq;
     char dado[20];
     struct no *dir;
@@ -13,17 +13,17 @@ struct no {
 typedef struct no *arvore;
 arvore T = NULL;
 
-typedef struct
+typedef struct //Struct para armazenar os dados do quiz
 {
-    char nome[50];
+    char nome[50]; //Nome da materia
     int pontuacao, perguntas;
 }Materia; // Define o nome do novo tipo criado
 Materia nomeM[10];
 
-void funcQuiz();
-void insertNode(arvore *t, char d[20]);
-void inOrdem(arvore t);
-int  procuraDado(arvore t, char d[20]);
+void funcQuiz(); //Função para o sub-menu do Quiz para que o usuário digite os dados
+void insertNode(arvore *t, char d[20]); //Inserindo o no t para preparar a ordenação
+void inOrdem(arvore t); //Mostrar as materias inseridas no quiz em ordem alfabetica
+int  procuraDado(arvore t, char d[20]); //Procurando o dado para comparar lado esquerdo e direito
 
 int main()
 {
@@ -116,14 +116,14 @@ int main()
             }
             break;
 
-        case 3:
+        case 3: //Menu do quiz
             printf("\n\n______ Quiz ______\n\n");
 
             printf ("Digite o que deseja (1 se avaliar, 0 pra voltar): ");
             scanf ("%d", &menuquiz);
             getchar();
 
-            while(menuquiz != 0)
+            while(menuquiz != 0) //Loop para que continue sendo executado enquanto o usuario não digitar 0 para voltar ao menu principal
             {
                 if(menuquiz == 1)
                 {
@@ -138,8 +138,6 @@ int main()
                     printf("\n\n------------------------------------------ Mostrando materias ------------------------------------------\n");
                     printf("Ordem alfabetica (A-Z):\n\n");
                     inOrdem(T);
-                    /*for(int i = 0; i < numero; i++)
-                        printf("\nMateria: %s\nPontuacao: %d de %d questoes\n\n", nomeM[i].nome, nomeM[i].pontuacao, nomeM[i].perguntas);*/
                     printf("\n=====================================================================\n\n");
                 break;
                 }
@@ -173,7 +171,7 @@ int main()
     while (menu != 0);
 }
 
-void funcQuiz ()
+void funcQuiz () //Onde o usuario informa sobre o quiz de autoavaliação
 {
     printf("Digite o nome da materia: ");
     scanf("%s", nomeM[numero].nome);
@@ -196,31 +194,31 @@ void funcQuiz ()
     {
         printf("\nVoce precisa estudar mais na materia: %s! Abaixo da media\n", nomeM[numero].nome);
     }
-    insertNode(&T, nomeM[numero].nome);
+    insertNode(&T, nomeM[numero].nome); //Endereço T receberá o nome de cada matéria adicionada
     numero++;
 }
 
-void insertNode(arvore *t, char d[20]) {
+void insertNode(arvore *t, char d[20]) { //t é inserido na árvore
     if (*t == NULL) {
-        *t = (struct no*) malloc(sizeof(struct no));
-        if ( *t != NULL ) {
+        *t = (struct no*) malloc(sizeof(struct no));//Alocando memória e verificando se tem espaço suficiente
+        if (*t != NULL) {
             (*t)->esq = NULL;
             (*t)->dir = NULL;
             strcpy((*t)->dado, d);
         } else
-            printf("Memoria insuficiente");
+            printf("ERRO: Memoria insuficiente!");
     } else
-        if (strcmp(d,(*t)->dado) < 0)
+        if (strcmp(d,(*t)->dado) < 0) //Comparando os dados e informando se há uma duplicação ou não
             insertNode(&(*t)->esq, d);
         else
             if (strcmp(d, (*t)->dado) > 0)
                 insertNode(&(*t)->dir, d);
             else
-                printf("Duplicação de no");
+                printf("ATENCAO: Duplicação de no!");
     return;
 }
 
-void inOrdem(arvore t) {
+void inOrdem(arvore t) { //Função para organizar e printar em ordem ALFABETICA
     if (t != NULL) {
         inOrdem(t->esq);
         printf("- %s\n", t->dado);
@@ -229,16 +227,10 @@ void inOrdem(arvore t) {
     return;
 }
 
-int  procuraDado(arvore t, char d[20]) {
+int  procuraDado(arvore t, char d[20]) { //Função que procura um dado para comparar com lado esquerdo/ direito
     if (t == NULL)
         return 0;
     return ((strcmp(t->dado, d) == 0) ||
              procuraDado(t->esq, d) ||
              procuraDado(t->dir, d));
-}
-
-int maior(int a, int b) {
-    if (a > b)
-        return(a);
-    return(b);
 }
