@@ -56,6 +56,7 @@ void imprime_lista(Lista*lista2);       //Imprimir os lembretes
 void le(char *texto);                   //Receber a variável texto para incluir na lista
 int insere(Lista *lista2,char *texto);  //Incluir na lista o que texto recebeu
 void cria(Lista *lista2);               //Criar lista para lembretes
+void pulaLinha();                       //Função com vários \n apenas para melhor leitura e organização no terminal de saída
 
 int main()
 {
@@ -86,27 +87,35 @@ int main()
             {
                 if(menulembrete == 1)
                 {
-                    printf ("\nMostrando lembretes...\n\n");
+                    pulaLinha();
+                    printf ("\n\n------------------------------------------ Mostrando lembretes ------------------------------------------\n");
                     imprime_lista(&lista2);
+                    printf("\n=====================================================================\n\n");
                     printf ("1 para ver,  2 para adicionar, 0 pra voltar: ");
                     scanf ("%d", &menulembrete);
+                    getchar();
                 }
 
                 if(menulembrete == 2)
                 {
-                    printf ("\nAdicione o lembrete\n\n");
+                    pulaLinha();
+                    printf ("\n++++++++++++ Adicione o lembrete ++++++++++++\n\n");
                     le(texto);
                     insere(&lista2, texto);
                     getchar();
                     memset(texto, '\0', 200);
+                    printf("\n=====================================================================\n\n");
                     printf ("1 para ver,  2 para adicionar, 0 pra voltar: ");
                     scanf ("%d", &menulembrete);
+                    getchar();
                 }
 
                 if(menulembrete == 0)
                 {
-                    printf ("\n\nVoltando a tela inicial...\n\n");
-                    break;
+                    pulaLinha();
+                    printf("\nAgradecemos por usar o Caderno de Aluno! Encerrando...\n\n");
+                    printf("\n###########################\n\n");
+                    printf("2022. By: Gabriel Dina Sales, Gabriel Sasuke Yamauchi de Souza, Luiz Felipe Terra da Silva e Vittoria Dutra Teixeira Pirro.");
                 }
 
                 if(menulembrete > 2)
@@ -130,10 +139,11 @@ int main()
             {
                 if(menuflashcard == 1)
                 {
-                    printf("\nExibindo lista de materias...\n");
+                    pulaLinha();
+                    printf ("\n\n------------------------------------------ Exibindo listas de materias ------------------------------------------\n");
                     for(i=0; i < indice; i++)
                         printf("%2d-\t%s\t%s\n", i+1, lista[i].materia, lista[i].nota);
-
+                    printf("\n=====================================================================\n\n");
                     printf ("\n1 mostrar materias,  2 inserir materia, 3 pesquisar materia ou 0 para sair: ");
                     scanf ("%d", &menuflashcard);
                     getchar();
@@ -141,24 +151,25 @@ int main()
 
                 if(menuflashcard == 2)
                 {
+                    pulaLinha();
                     if(indice < 10)
                     {
-                        printf("\nInserindo materia...\n");
+                        printf("\n++++++++++++ Inserindo materia ++++++++++++\n\n");
                         insereFlash();
                     }
                     else
-                        printf("Maximo de materias!\n");
-
-                    printf ("\n1 mostrar materias,  2 inserir materia, 3 pesquisar materia ou 0 para sair: ");
-                    scanf ("%d", &menuflashcard);
-                    getchar();
+                        printf("\n\nMaximo de materias!\n");
+                        printf ("\n1 mostrar materias,  2 inserir materia, 3 pesquisar materia ou 0 para sair: ");
+                        scanf ("%d", &menuflashcard);
+                        getchar();
                 }
 
                 if(menuflashcard == 3)
                 {
-                    printf("\nPesquisando materia...\n");
+                    pulaLinha();
+                    printf("\n************** Pesquisando materia **************\n");
                     pesquisaMateriaFlash();
-
+                    printf("\n=====================================================================\n\n");
                     printf ("\n1 mostrar materias,  2 inserir materia, 3 pesquisar materia ou 0 para sair: ");
                     scanf ("%d", &menuflashcard);
                     getchar();
@@ -166,7 +177,10 @@ int main()
 
                 if(menuflashcard == 0)
                 {
-                    printf ("\n\nVoltando a tela inicial...\n\n");
+                    pulaLinha();
+                    printf("\nAgradecemos por usar o Caderno de Aluno! Encerrando...\n\n");
+                    printf("\n###########################\n\n");
+                    printf("2022. By: Gabriel Dina Sales, Gabriel Sasuke Yamauchi de Souza, Luiz Felipe Terra da Silva e Vittoria Dutra Teixeira Pirro.");
                     break;
                 }
 
@@ -191,8 +205,10 @@ int main()
             {
                 if(menuquiz == 1)
                 {
-                    printf ("Comecando o quiz...\n\n");
+                    pulaLinha();
+                    printf ("!!!!!!!!!!!!!! Comecando o quiz !!!!!!!!!!!!!!\n\n");
                     funcQuiz();
+                    printf("\n=====================================================================\n\n");
                     printf ("\n1 se avaliar novamente, 2 ver materias adicionadas, 0 pra voltar: ");
                     scanf ("%d", &menuquiz);
                     getchar();
@@ -210,6 +226,7 @@ int main()
                 if(menuquiz == 0)
                 {
                     printf ("\n\nVoltando a tela inicial...\n\n");
+                    printf("\n\n------------------------------------------\n\n");
                     break;
                 }
 
@@ -224,8 +241,10 @@ int main()
             break;
 
         case 0:
-            printf("\nEncerrando...\n\n");
+            printf("\nAgradecemos por usar o Caderno de Aluno! Encerrando...\n\n");
             printf("\n###########################\n\n");
+            printf("By: \n | Gabriel Dina Sales | \n | Gabriel Sasuke Yamauchi de Souza | \n | Luiz Felipe Terra da Silva | \n | Vittoria Dutra Teixeira Pirro |\n\n");
+            printf("\t\t\t||  ||\n\t\t\t\\\\()//\n                       //(__)\\\\\n                       ||    ||\n \t\t       Dez. 2022\n\n");
             break;
 
         default:
@@ -303,6 +322,7 @@ void insereFlash(){  //Fun��o que recebe os dados da materia a nota da mesma
     scanf("%s", &lista[indice++].nota);
     getchar();
     sortFlashcard(indice);
+    printf("\n=====================================================================\n\n");
 }
 
 void pesquisaMateriaFlash(){   //Fun��o para receber o nome da mat�ria que o usu�rio deseja pesquisar e que � enviado para a pesquisa binaria
@@ -376,4 +396,8 @@ while(aux!=NULL){
 printf("\n%s\n", aux->texto);
 aux=aux->prox;
 }
+}
+
+void pulaLinha(){
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 }
