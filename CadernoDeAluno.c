@@ -116,6 +116,7 @@ int main()
                     printf("\nAgradecemos por usar o Caderno de Aluno! Encerrando...\n\n");
                     printf("\n###########################\n\n");
                     printf("2022. By: Gabriel Dina Sales, Gabriel Sasuke Yamauchi de Souza, Luiz Felipe Terra da Silva e Vittoria Dutra Teixeira Pirro.");
+                    break;
                 }
 
                 if(menulembrete > 2)
@@ -225,8 +226,10 @@ int main()
 
                 if(menuquiz == 0)
                 {
-                    printf ("\n\nVoltando a tela inicial...\n\n");
-                    printf("\n\n------------------------------------------\n\n");
+                    pulaLinha();
+                    printf("\nAgradecemos por usar o Caderno de Aluno! Encerrando...\n\n");
+                    printf("\n###########################\n\n");
+                    printf("2022. By: Gabriel Dina Sales, Gabriel Sasuke Yamauchi de Souza, Luiz Felipe Terra da Silva e Vittoria Dutra Teixeira Pirro.");
                     break;
                 }
 
